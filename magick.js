@@ -11,6 +11,7 @@ function status(msg){
 }
 
 function initMagick (){
+
     status('starting...');
     if (annyang) {
         annyang.debug(true);// currently, we'll need to see what's going on in here...
@@ -18,32 +19,78 @@ function initMagick (){
         // our spells will get specified here...
         var spells = {
 		// Hide body of document
-            'hide': function() {
+            'off': function() {
                 status("Hiding the body...");
                 $('body').animate({opacity: '0'});
             },
 		// Show body of document
-            'show': function() {
+            'on': function() {
                 status("Showing the body...");
                 $('body').animate({opacity: '1'});
             },
+		// Hide all elements with given HTML tag or CSS class name
+            'hide *class_or_tag': function(class_or_tag) {
+                status("Hiding all elements with tag or css class: " + class_or_tag + "");
+                $('.' + class_or_tag + ',' + class_or_tag).hide();
+            },
+		// Show all elements with given HTML tag or CSS class name
+            'show *class_or_tag': function(class_or_tag) {
+                status("Showing all elements with tag or css class: " + class_or_tag + "");
+                $('.' + class_or_tag + ',' + class_or_tag).show();
+            },
 		// Hide all elements with given CSS class name
-            'hide *class': function(class_name) {
+            'hide class *class_name': function(class_name) {
                 status("Hiding all elements with css class: " + class_name + "");
-                $('.'+class_name).hide();
+                $('.' + class_name).hide();
             },
 		// Show all elements with given CSS class name
-            'show *class': function(class_name) {
+            'show class *class_name': function(class_name) {
                 status("Showing all elements with css class: " + class_name + "");
-                $('.'+class_name).show();
+                $('.' + class_name).show();
+            },
+		// Hide all elements with given HTML tag name
+            'hide tag *tag_name': function(tag_name) {
+                status("Hiding all elements with HTML tag: " + tag_name + "");
+                $(tag_name).hide();
+            },
+		// Show all elements with given HTML tag name
+            'show tag *tag_name': function(tag_name) {
+                status("Showing all elements with HTML tag: " + tag_name + "");
+                $(tag_name).show();
+            },
+		// Double Width of all elements with given CSS class name
+            'grow *class_name': function(class_name) {
+                status("Doubling the Width all elements with css class: " + class_name + "");
+                $('.' + class_name).each(function(e){
+                    $(this).css('width',Number.parseInt($(this).css('width'))*2)
+                    // Or should we try something like: $(this).css({ '-webkit-transform': 'scale(2)', 'transform': 'scale(2)'})
+                    // only prob with this, it wouldn't grow past the fast invocation - though using transforms would be more generic
+                });
+            },
+		// Half Width of all elements with given CSS class name
+            'shrink *class_name': function(class_name) {
+                status("Halving the Width all elements with css class: " + class_name + "");
+                $('.' + class_name).each(function(e){
+                    $(this).css('width',Number.parseInt($(this).css('width'))*0.5)
+                });
+            },
+		// Shake all elements with given HTML tag or CSS class name
+            'shake *class_or_tag': function(class_or_tag) {
+                status("Shaking all elements with tag or css class: " + class_or_tag + "");
+                $('.' + class_or_tag + ',' + class_or_tag).addClass('shake');
+            },
+		// Free/Make-Still all elements with given HTML tag or CSS class name
+            'freeze *class_or_tag': function(class_or_tag) {
+                status("Freeze/Make-Still all elements with tag or css class: " + class_or_tag + "");
+                $('.' + class_or_tag + ',' + class_or_tag).removeClass('shake');
             },
 		// SPECIAL : hide any element with class "help"
-            'Am a Ninja': function() {
+            'am a ninja': function() {
                 status("Hiding all elements with css class 'help'");
                 $('.help').hide();
             },
 		// SPECIAL : show any element with class "help"
-            'Help': function() {
+            'help': function() {
                 status("Showing all elements with css class 'help'");
                 $('.help').show();
             }

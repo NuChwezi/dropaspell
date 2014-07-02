@@ -1,4 +1,5 @@
 
+// then load the magical scripts...
 chrome.tabs.executeScript(
     null,
     {
