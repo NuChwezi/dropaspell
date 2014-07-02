@@ -85,7 +85,7 @@ function initMagick (){
                 $('.' + class_or_tag + ',' + class_or_tag).removeClass('shake');
             },
 		// SPECIAL : hide any element with class "help"
-            'am a ninja': function() {
+            'i ninja': function() {
                 status("Hiding all elements with css class 'help'");
                 $('.help').hide();
             },
